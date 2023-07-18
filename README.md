@@ -2,12 +2,12 @@
 
 ## Setup
 ```bash
-pnpn i
+pnpm i
 cd rage-webassembly
 wasm-pack build
 ```
 
 ## Run dev
 ```bash
-pnpn dev
+pnpm dev
 ```
