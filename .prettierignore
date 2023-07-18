@@ -3,6 +3,7 @@ node_modules
 /build
 /.svelte-kit
 /package
+/rage-webassembly
 .env
 .env.*
 !.env.example
