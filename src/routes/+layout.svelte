@@ -2,9 +2,18 @@
   import "@fontsource/fira-sans";
 </script>
 
-Test layout
+<ul>
+  <li>
+    <a href="/private-key">Private key management</a>
+  </li>
+  <li>
+    <a href="/test">Test</a>
+  </li>
+</ul>
 
-<slot />
+<div>
+  <slot />
+</div>
 
 <style>
   :global(body) {
