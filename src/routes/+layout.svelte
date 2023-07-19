@@ -6,9 +6,9 @@
 <div class="title">
   <a href="/">fbrage</a>
 </div>
-<div class="content">
+<main>
   <slot />
-</div>
+</main>
 
 <style lang="scss">
   .title {
@@ -16,8 +16,5 @@
     justify-content: center;
     font-size: 2rem;
     font-weight: bold;
-  }
-  .content {
-    padding: 10px;
   }
 </style>

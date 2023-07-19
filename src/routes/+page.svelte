@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="main">
+  <div class="menu">
     <a role="button" href="/test">Test</a>
     <a role="button" href="/private-key">Private key management</a>
   </div>
@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
   }
-  .main {
+  .menu {
     display: grid;
     gap: 10px;
     max-width: 600px;
