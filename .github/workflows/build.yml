@@ -2,30 +2,30 @@ name: Build and Test
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: |
-        curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
-        curl -L https://unpkg.com/@pnpm/self-installer | node
+      - name: Install dependencies
+        run: |
+          curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+          curl -L https://unpkg.com/@pnpm/self-installer | node
 
-    - name: Build Subproject
-      run: |
-        cd rage-webassembly
-        wasm-pack build
+      - name: Build Subproject
+        run: |
+          cd rage-webassembly
+          wasm-pack build
 
-    - name: Build Main Project
-      run: |
-        pnpm install
-        pnpm lint
-        pnpm check
+      - name: Build Main Project
+        run: |
+          pnpm install
+          pnpm lint
+          pnpm check
