@@ -26,7 +26,6 @@ jobs:
 
     - name: Build Main Project
       run: |
-        cd ..
         pnpm install
         pnpm lint
         pnpm check
