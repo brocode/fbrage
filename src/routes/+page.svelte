@@ -1,5 +1,2 @@
-<script lang="ts">
-  import { greet } from "rage-webassembly";
-</script>
-
-<button on:click={greet}>Test</button>
+<a href="/private-key">Private key management</a>
+<a href="/test">Test</a>
