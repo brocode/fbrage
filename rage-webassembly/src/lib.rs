@@ -1,6 +1,5 @@
 mod utils;
 
-use ageutil::encrypt_message;
 use utils::set_panic_hook;
 use wasm_bindgen::prelude::*;
 
@@ -18,13 +17,27 @@ extern "C" {
 }
 
 #[wasm_bindgen]
-pub fn decrypt(private_keys: Array) -> Result<String, String> {
+pub fn encrypt_message(message: String, public_keys: Array) -> Result<String, String> {
+    set_panic_hook();
+    let public_key_strings: Vec<String> = public_keys
+        .iter()
+        .map(|val| val.as_string().ok_or("Not a string"))
+        .collect::<Result<Vec<_>, _>>()?;
+    let recipients = ageutil::parse_public_keys(public_key_strings)?;
+    let encrypted_message = ageutil::encrypt_message(recipients, &message)?;
+    Ok(encrypted_message)
+}
+
+#[wasm_bindgen]
+pub fn decrypt_message(message: String, private_keys: Array) -> Result<String, String> {
+    set_panic_hook();
     let private_key_strings: Vec<String> = private_keys
         .iter()
         .map(|val| val.as_string().ok_or("Not a string"))
         .collect::<Result<Vec<_>, _>>()?;
-    ageutil::parse_private_keys(private_key_strings)?;
-    Ok("".to_string())
+    let identities = ageutil::parse_private_keys(private_key_strings)?;
+    let decrypted_message = ageutil::decrypt_message(identities, &message)?;
+    Ok(decrypted_message)
 }
 
 #[wasm_bindgen]
@@ -35,7 +48,7 @@ pub fn greet() -> Result<String, String> {
 
     let plaintext = "Hello world!";
 
-    let encrypted = encrypt_message(plaintext, vec![recipient])?;
+    let encrypted = ageutil::encrypt_message(vec![recipient], plaintext)?;
     log("Encryption success");
     log(&encrypted);
     Ok(encrypted)

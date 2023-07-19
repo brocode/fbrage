@@ -12,8 +12,8 @@ use std::io::Write;
 use std::io::{Cursor, Read};
 
 pub fn encrypt_message(
-    message: &str,
     recipients: Vec<Box<dyn Recipient + Send>>,
+    message: &str,
 ) -> Result<String, AppError> {
     let mut output_vec = Vec::new();
     let mut output = ArmoredWriter::wrap_output(&mut output_vec, Format::AsciiArmor)?;
@@ -55,6 +55,17 @@ fn remove_comments(input: &str) -> String {
         .join("\n")
 }
 
+pub fn parse_public_keys(keys: Vec<String>) -> Result<Vec<Box<dyn Recipient + Send>>, AppError> {
+    let recipients: Vec<_> = keys
+        .iter()
+        .map(|key| {
+            age::x25519::Recipient::from_str(key)
+                .map(|id| Box::new(id) as Box<dyn Recipient + Send>)
+        })
+        .collect::<Result<Vec<_>, _>>()?;
+    Ok(recipients)
+}
+
 pub fn parse_private_keys(keys: Vec<String>) -> Result<Vec<Arc<dyn Identity>>, AppError> {
     let identities: Vec<_> = keys
         .iter()
@@ -68,11 +79,13 @@ pub fn parse_private_keys(keys: Vec<String>) -> Result<Vec<Arc<dyn Identity>>, A
 
 #[cfg(test)]
 mod tests {
+    use std::vec;
+
     use super::*;
     use age::secrecy::ExposeSecret;
 
     #[test]
-    fn test_parse_keys() -> Result<(), String> {
+    fn test_private_parse_keys() -> Result<(), String> {
         let identity = age::x25519::Identity::generate();
         let key_as_string: String = format!(
             "# created: 2023-07-12T12:16:23+02:00\n{}\n",
@@ -84,9 +97,16 @@ mod tests {
     }
 
     #[test]
+    fn test_parse_public_keys() -> Result<(), String> {
+        let key = "age1hwuyjjjvljra6j00vynkgaxap7zlh4fmadj09m4jn6t9t0nveyds6mt6zf";
+        parse_public_keys(vec![key.to_string()])?;
+        Ok(())
+    }
+
+    #[test]
     fn test_en_and_decrypt() -> Result<(), String> {
         let identity = age::x25519::Identity::generate();
-        let encrypted = encrypt_message("fkbr", vec![Box::new(identity.to_public())])?;
+        let encrypted = encrypt_message(vec![Box::new(identity.to_public())], "fkbr")?;
         let decrypted = decrypt_message(vec![Arc::new(identity)], &encrypted)?;
         assert_eq!(decrypted, "fkbr");
 
