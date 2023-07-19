@@ -13,6 +13,14 @@
 
     ev.currentTarget.reset();
   };
+
+  const handleDelete = (keyName: string) => {
+    privateKeyStore.update((current) => {
+      const newStore = { ...current };
+      delete newStore[keyName];
+      return newStore;
+    });
+  };
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
@@ -20,6 +28,11 @@
   <textarea bind:value={keyContent} />
   <button>Add Key</button>
 </form>
-<pre>
-  {JSON.stringify($privateKeyStore, null, 4)}
-</pre>
+<ul>
+  {#each Object.keys($privateKeyStore) as name}
+    <li>
+      <span>{name}</span>
+      <button on:click={() => handleDelete(name)}>Delete</button>
+    </li>
+  {/each}
+</ul>
