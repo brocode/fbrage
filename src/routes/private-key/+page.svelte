@@ -25,14 +25,12 @@
 
 <form on:submit|preventDefault={handleSubmit}>
   <input name="key_name" placeholder="Name of your age key" bind:value={keyName} />
-  <textarea bind:value={keyContent} />
+  <textarea placeholder="Private key" bind:value={keyContent} />
   <button>Add Key</button>
 </form>
-<ul>
-  {#each Object.keys($privateKeyStore) as name}
-    <li>
-      <span>{name}</span>
-      <button on:click={() => handleDelete(name)}>Delete</button>
-    </li>
-  {/each}
-</ul>
+{#each Object.keys($privateKeyStore) as name}
+  <article>
+    <h1>{name}</h1>
+    <button on:click={() => handleDelete(name)}>Delete</button>
+  </article>
+{/each}
