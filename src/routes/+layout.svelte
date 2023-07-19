@@ -1,5 +1,6 @@
 <script lang="ts">
   import "@fontsource/fira-sans";
+  import "./global.scss";
 </script>
 
 <ul>
@@ -14,9 +15,3 @@
 <div>
   <slot />
 </div>
-
-<style>
-  :global(body) {
-    font-family: "Fira Sans", sans-serif;
-  }
-</style>
