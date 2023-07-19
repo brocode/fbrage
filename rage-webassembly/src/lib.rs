@@ -1,13 +1,11 @@
 mod utils;
 
-use age;
-use age::armor::{ArmoredWriter, Format};
 use ageutil::encrypt_message;
 use utils::set_panic_hook;
 use wasm_bindgen::prelude::*;
 
 use js_sys::Array;
-use std::io::Write;
+
 use std::str::FromStr;
 
 mod ageutil;
@@ -26,7 +24,7 @@ pub fn decrypt(private_keys: Array) -> Result<String, String> {
         .map(|val| val.as_string().ok_or("Not a string"))
         .collect::<Result<Vec<_>, _>>()?;
     ageutil::parse_private_keys(private_key_strings)?;
-    return Ok("".to_string());
+    Ok("".to_string())
 }
 
 #[wasm_bindgen]
@@ -40,5 +38,5 @@ pub fn greet() -> Result<String, String> {
     let encrypted = encrypt_message(plaintext, vec![recipient])?;
     log("Encryption success");
     log(&encrypted);
-    return Ok(encrypted);
+    Ok(encrypted)
 }

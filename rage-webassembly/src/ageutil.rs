@@ -26,7 +26,7 @@ pub fn encrypt_message(
     writer.write_all(message.as_bytes()).unwrap();
     writer.finish()?;
     output.finish()?;
-    return Ok(String::from_utf8(output_vec)?);
+    Ok(String::from_utf8(output_vec)?)
 }
 
 pub fn decrypt_message(
@@ -40,13 +40,11 @@ pub fn decrypt_message(
             let mut reader = d.decrypt(identities.iter().map(|arc| arc.as_ref()))?;
             let mut buffer = String::new();
             reader.read_to_string(&mut buffer)?;
-            return Ok(buffer);
+            Ok(buffer)
         }
-        Decryptor::Passphrase(_) => {
-            return Err(AppError::RuntimeError(
-                "Passphrase based decryption not supported".to_string(),
-            ));
-        }
+        Decryptor::Passphrase(_) => Err(AppError::RuntimeError(
+            "Passphrase based decryption not supported".to_string(),
+        )),
     }
 }
 fn remove_comments(input: &str) -> String {
@@ -65,7 +63,7 @@ pub fn parse_private_keys(keys: Vec<String>) -> Result<Vec<Arc<dyn Identity>>, A
                 .map(|id| Arc::new(id) as Arc<dyn Identity>)
         })
         .collect::<Result<Vec<_>, _>>()?;
-    return Ok(identities);
+    Ok(identities)
 }
 
 #[cfg(test)]
@@ -82,7 +80,7 @@ mod tests {
         );
         let parsed_identities = parse_private_keys(vec![key_as_string])?;
         assert_eq!(parsed_identities.len(), 1);
-        return Ok(());
+        Ok(())
     }
 
     #[test]
@@ -92,6 +90,6 @@ mod tests {
         let decrypted = decrypt_message(vec![Arc::new(identity)], &encrypted)?;
         assert_eq!(decrypted, "fkbr");
 
-        return Ok(());
+        Ok(())
     }
 }
