@@ -5,8 +5,6 @@ use wasm_bindgen::prelude::*;
 
 use js_sys::Array;
 
-use std::str::FromStr;
-
 mod ageutil;
 mod error;
 
@@ -38,18 +36,4 @@ pub fn decrypt_message(message: String, private_keys: Array) -> Result<String, S
     let identities = ageutil::parse_private_keys(private_key_strings)?;
     let decrypted_message = ageutil::decrypt_message(identities, &message)?;
     Ok(decrypted_message)
-}
-
-#[wasm_bindgen]
-pub fn greet() -> Result<String, String> {
-    set_panic_hook();
-    let key = "age1hwuyjjjvljra6j00vynkgaxap7zlh4fmadj09m4jn6t9t0nveyds6mt6zf";
-    let recipient = Box::new(age::x25519::Recipient::from_str(key)?);
-
-    let plaintext = "Hello world!";
-
-    let encrypted = ageutil::encrypt_message(vec![recipient], plaintext)?;
-    log("Encryption success");
-    log(&encrypted);
-    Ok(encrypted)
 }
