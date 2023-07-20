@@ -5,6 +5,14 @@
 
 <h1>Coole public keys</h1>
 <ImportPublicKeys />
-<pre>
-    {JSON.stringify($publicKeyStore, null, 4)}
-</pre>
+
+{#each Object.keys($publicKeyStore) as recipientName}
+  <article>
+    <header>{recipientName}</header>
+    {#each $publicKeyStore[recipientName] as key}
+      <pre>
+        {key}
+      </pre>
+    {/each}
+  </article>
+{/each}
