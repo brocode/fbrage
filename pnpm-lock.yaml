@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@fontsource/fira-code':
+    specifier: ^5.0.5
+    version: 5.0.5
   '@fontsource/fira-sans':
     specifier: ^5.0.5
     version: 5.0.5
@@ -320,6 +323,10 @@ packages:
     resolution: {integrity: sha512-Ag+9YM4ocKQx9AarydN0KY2j0ErMHNIocPDrVo8zAE44xLTjEtz81OdR68/cydGtk6m6jDb5Za3r2useMzYmSw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@fontsource/fira-code@5.0.5:
+    resolution: {integrity: sha512-mb6eBaD0nheCaPZYllnBVsfUUuZufFtxZrF57CjmzkW2tM/G6Yag2UGjCX6vWVblHiIssmj986IDJo+R7SvnMw==}
+    dev: false
 
   /@fontsource/fira-sans@5.0.5:
     resolution: {integrity: sha512-bC78p6xTv0SCr/0IChKW7XF06dSS2ZVKKixHswT7iSh5ummWEmct3uujnjuHg7FjPiETx3/twQUnflGJnq4nAw==}

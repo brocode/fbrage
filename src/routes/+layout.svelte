@@ -1,5 +1,6 @@
 <script lang="ts">
   import "@fontsource/fira-sans";
+  import "@fontsource/fira-code";
   import "./global.scss";
 </script>
 

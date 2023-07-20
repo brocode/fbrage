@@ -34,8 +34,9 @@
   },
   "type": "module",
   "dependencies": {
-    "@picocss/pico": "^1.5.10",
+    "@fontsource/fira-code": "^5.0.5",
     "@fontsource/fira-sans": "^5.0.5",
+    "@picocss/pico": "^1.5.10",
     "rage-webassembly": "link:rage-webassembly/pkg"
   }
 }
