@@ -47,6 +47,8 @@
   <article>
     <h2>Ciphertext</h2>
     <pre>{cipherText}</pre>
+
+    <a href={`/decrypt-hash#${encodeURIComponent(cipherText)}`}>Link to decrypt</a>
   </article>
 {/if}
 {#if error != null}

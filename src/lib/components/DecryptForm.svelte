@@ -2,6 +2,7 @@
   import type { PrivateKeyStore } from "$lib/private_key_store";
   import { decrypt_message } from "rage-webassembly";
   import ErrorMessage from "./ErrorMessage.svelte";
+  import Message from "./Message.svelte";
 
   let plainText: string | null = null;
   let error: string | null = null;
@@ -27,12 +28,7 @@
 </form>
 
 {#if plainText != null}
-  <article>
-    <h2>Plaintext</h2>
-    <div>
-      {plainText}
-    </div>
-  </article>
+  <Message message={plainText} />
 {/if}
 {#if error != null}
   <ErrorMessage {error} />
