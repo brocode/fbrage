@@ -15,8 +15,8 @@
     plainText = null;
     try {
       plainText = decrypt_message(cipherText, Object.values(privateKeyStore));
-    } catch (e: any) {
-      error = e;
+    } catch (e: unknown) {
+      error = String(e);
     }
   };
 </script>
