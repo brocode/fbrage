@@ -1,6 +1,7 @@
 <div class="wrapper">
   <div class="menu">
     <a role="button" href="/decrypt">Decrypt</a>
+    <a role="button" href="/encrypt">Encrypt</a>
     <a role="button" href="/private-key">Private key management</a>
     <a role="button" href="/public-keys">Public key management</a>
   </div>
