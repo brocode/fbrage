@@ -27,18 +27,13 @@
 </form>
 
 {#if plainText != null}
-  <h2>Plaintext</h2>
-  <div class="plaintext">
-    {plainText}
-  </div>
+  <article>
+    <h2>Plaintext</h2>
+    <div>
+      {plainText}
+    </div>
+  </article>
 {/if}
 {#if error != null}
   <ErrorMessage {error} />
 {/if}
-
-<style lang="scss">
-  .plaintext {
-    border: var(--border-width) solid var(--form-element-border-color);
-    padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
-  }
-</style>
