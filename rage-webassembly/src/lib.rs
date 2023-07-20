@@ -21,7 +21,7 @@ pub fn encrypt_message(message: String, public_keys: Array) -> Result<String, St
         .iter()
         .map(|val| val.as_string().ok_or("Not a string"))
         .collect::<Result<Vec<_>, _>>()?;
-    let recipients = ageutil::parse_public_keys(public_key_strings)?;
+    let recipients = ageutil::parse_public_keys(&public_key_strings)?;
     let encrypted_message = ageutil::encrypt_message(recipients, &message)?;
     Ok(encrypted_message)
 }
@@ -33,7 +33,7 @@ pub fn decrypt_message(message: String, private_keys: Array) -> Result<String, S
         .iter()
         .map(|val| val.as_string().ok_or("Not a string"))
         .collect::<Result<Vec<_>, _>>()?;
-    let identities = ageutil::parse_private_keys(private_key_strings)?;
+    let identities = ageutil::parse_private_keys(&private_key_strings)?;
     let decrypted_message = ageutil::decrypt_message(identities, &message)?;
     Ok(decrypted_message)
 }

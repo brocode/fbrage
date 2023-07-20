@@ -55,7 +55,7 @@ fn remove_comments(input: &str) -> String {
         .join("\n")
 }
 
-pub fn parse_public_keys(keys: Vec<String>) -> Result<Vec<Box<dyn Recipient + Send>>, AppError> {
+pub fn parse_public_keys(keys: &[String]) -> Result<Vec<Box<dyn Recipient + Send>>, AppError> {
     let recipients: Vec<_> = keys
         .iter()
         .map(|key| {
@@ -66,7 +66,7 @@ pub fn parse_public_keys(keys: Vec<String>) -> Result<Vec<Box<dyn Recipient + Se
     Ok(recipients)
 }
 
-pub fn parse_private_keys(keys: Vec<String>) -> Result<Vec<Arc<dyn Identity>>, AppError> {
+pub fn parse_private_keys(keys: &[String]) -> Result<Vec<Arc<dyn Identity>>, AppError> {
     let identities: Vec<_> = keys
         .iter()
         .map(|key| {
@@ -91,7 +91,7 @@ mod tests {
             "# created: 2023-07-12T12:16:23+02:00\n{}\n",
             identity.to_string().expose_secret().to_owned()
         );
-        let parsed_identities = parse_private_keys(vec![key_as_string])?;
+        let parsed_identities = parse_private_keys(&[key_as_string])?;
         assert_eq!(parsed_identities.len(), 1);
         Ok(())
     }
@@ -99,7 +99,7 @@ mod tests {
     #[test]
     fn test_parse_public_keys() -> Result<(), String> {
         let key = "age1hwuyjjjvljra6j00vynkgaxap7zlh4fmadj09m4jn6t9t0nveyds6mt6zf";
-        parse_public_keys(vec![key.to_string()])?;
+        parse_public_keys(&[key.to_owned()])?;
         Ok(())
     }
 
