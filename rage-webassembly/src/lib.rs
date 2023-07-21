@@ -1,5 +1,6 @@
 mod utils;
 
+use ageutil::GeneratedKey;
 use utils::set_panic_hook;
 use wasm_bindgen::prelude::*;
 
@@ -36,4 +37,9 @@ pub fn decrypt_message(message: String, private_keys: Array) -> Result<String, S
     let identities = ageutil::parse_private_keys(&private_key_strings)?;
     let decrypted_message = ageutil::decrypt_message(identities, &message)?;
     Ok(decrypted_message)
+}
+
+#[wasm_bindgen]
+pub fn genkey() -> GeneratedKey{
+    return ageutil::gen_key();
 }

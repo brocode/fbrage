@@ -10,6 +10,15 @@ use age::Identity;
 use age::Recipient;
 use std::io::Write;
 use std::io::{Cursor, Read};
+use wasm_bindgen::prelude::*;
+use age::secrecy::ExposeSecret;
+
+#[allow(dead_code)]
+#[wasm_bindgen]
+pub struct GeneratedKey {
+    public_key: String,
+    private_key: String,
+}
 
 pub fn encrypt_message(
     recipients: Vec<Box<dyn Recipient + Send>>,
@@ -77,6 +86,14 @@ pub fn parse_private_keys(keys: &[String]) -> Result<Vec<Arc<dyn Identity>>, App
     Ok(identities)
 }
 
+pub fn gen_key() -> GeneratedKey {
+    let identity = age::x25519::Identity::generate();
+    return GeneratedKey {
+        public_key: identity.to_public().to_string(),
+        private_key: identity.to_string().expose_secret().to_owned()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use std::vec;
@@ -110,6 +127,14 @@ mod tests {
         let decrypted = decrypt_message(vec![Arc::new(identity)], &encrypted)?;
         assert_eq!(decrypted, "fkbr");
 
+        Ok(())
+    }
+
+    #[test]
+    fn test_gen_key() -> Result<(), String> {
+        let generated_key = gen_key();
+        parse_private_keys(&[generated_key.private_key])?;
+        parse_public_keys(&[generated_key.public_key])?;
         Ok(())
     }
 }
