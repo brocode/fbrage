@@ -22,7 +22,7 @@
     font-size: 2rem;
     font-weight: bold;
   }
-  footer {
+  :global(#root) > footer {
     display: flex;
     justify-content: center;
     padding-top: 0;
