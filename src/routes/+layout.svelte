@@ -1,7 +1,7 @@
 <script lang="ts">
   import "@fontsource/fira-sans";
   import "@fontsource/fira-code";
-  import "./global.scss";
+  import "$lib/scss/global.scss";
 </script>
 
 <div class="title">
