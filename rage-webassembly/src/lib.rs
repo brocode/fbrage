@@ -41,5 +41,5 @@ pub fn decrypt_message(message: String, private_keys: Array) -> Result<String, S
 
 #[wasm_bindgen]
 pub fn genkey() -> GeneratedKey{
-    return ageutil::gen_key();
+    ageutil::gen_key()
 }
