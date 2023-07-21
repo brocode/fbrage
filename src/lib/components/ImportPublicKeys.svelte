@@ -62,7 +62,7 @@
   }
 </script>
 
-<button on:click={loadPublicKeys}>Import Public Keys</button>
+<button on:click={loadPublicKeys}>Import Symbiolab Public Keys</button>
 {#if error != null}
   <ErrorMessage {error} />
 {/if}
