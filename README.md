@@ -1,5 +1,7 @@
 # fbrage
 
+![fbrage](./static/logo/logo_500x500.webp)
+
 ## Setup
 
 ```bash
