@@ -2,6 +2,7 @@ use std::str::FromStr;
 use std::sync::Arc;
 
 use crate::error::AppError;
+use serde::{Serialize, Deserialize};
 use age::armor::ArmoredReader;
 use age::armor::ArmoredWriter;
 use age::armor::Format;
@@ -10,11 +11,9 @@ use age::Identity;
 use age::Recipient;
 use std::io::Write;
 use std::io::{Cursor, Read};
-use wasm_bindgen::prelude::*;
 use age::secrecy::ExposeSecret;
 
-#[allow(dead_code)]
-#[wasm_bindgen]
+#[derive(Serialize, Deserialize)]
 pub struct GeneratedKey {
     public_key: String,
     private_key: String,
