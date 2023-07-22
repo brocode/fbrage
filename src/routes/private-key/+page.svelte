@@ -24,8 +24,8 @@
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
-  <input name="key_name" placeholder="Name of your age key" bind:value={keyName} />
-  <textarea placeholder="Private key" bind:value={keyContent} />
+  <input required name="key_name" placeholder="Name of your age key" bind:value={keyName} />
+  <textarea required placeholder="Private key" bind:value={keyContent} />
   <button>Add Key</button>
 </form>
 {#each Object.keys($privateKeyStore) as name}
