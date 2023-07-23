@@ -44,3 +44,7 @@ pub fn genkey() -> Result<JsValue, String> {
     let js_value = serde_wasm_bindgen::to_value(&ageutil::gen_key()).map_err(|e| e.to_string())?;
     return Ok(js_value);
 }
+#[wasm_bindgen]
+pub fn get_public_key_for_private_key(private_key: String) -> Result<String, String> {
+    Ok(ageutil::get_public_key_for_private_key(&private_key)?)
+}

@@ -85,6 +85,11 @@ pub fn parse_private_keys(keys: &[String]) -> Result<Vec<Arc<dyn Identity>>, App
     Ok(identities)
 }
 
+pub fn get_public_key_for_private_key(private_key: &str) -> Result<String, AppError> {
+    let identity = age::x25519::Identity::from_str(&remove_comments(private_key))?;
+    Ok(identity.to_public().to_string())
+}
+
 pub fn gen_key() -> GeneratedKey {
     let identity = age::x25519::Identity::generate();
     return GeneratedKey {

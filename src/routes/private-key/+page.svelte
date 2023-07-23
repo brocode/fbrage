@@ -1,4 +1,5 @@
 <script lang="ts">
+  import PrivateKeyCard from "$lib/components/PrivateKeyCard.svelte";
   import { privateKeyStore } from "$lib/private_key_store";
   import type { FormEventHandler } from "svelte/elements";
 
@@ -29,8 +30,5 @@
   <button>Add Key</button>
 </form>
 {#each Object.keys($privateKeyStore) as name}
-  <article>
-    <h1>{name}</h1>
-    <button on:click={() => handleDelete(name)}>Delete</button>
-  </article>
+  <PrivateKeyCard {name} privateKey={$privateKeyStore[name]} {handleDelete} />
 {/each}
