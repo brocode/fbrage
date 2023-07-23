@@ -42,7 +42,7 @@ pub fn decrypt_message(message: String, private_keys: Array) -> Result<String, S
 pub fn genkey() -> Result<JsValue, String> {
     set_panic_hook();
     let js_value = serde_wasm_bindgen::to_value(&ageutil::gen_key()).map_err(|e| e.to_string())?;
-    return Ok(js_value);
+    Ok(js_value)
 }
 #[wasm_bindgen]
 pub fn get_public_key_for_private_key(private_key: String) -> Result<String, String> {
