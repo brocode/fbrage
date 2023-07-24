@@ -66,7 +66,7 @@ pub fn decrypt_file(
             reader.read_to_end(&mut buffer)?;
             Ok(buffer)
         }
-        Decryptor::Passphrase(_) => Err(AppError::RuntimeError(
+        Decryptor::Passphrase(_) => Err(AppError::FbrageError(
             "Passphrase based decryption not supported".to_string(),
         )),
     }
@@ -84,7 +84,7 @@ pub fn decrypt_message(
             reader.read_to_string(&mut buffer)?;
             Ok(buffer)
         }
-        Decryptor::Passphrase(_) => Err(AppError::RuntimeError(
+        Decryptor::Passphrase(_) => Err(AppError::FbrageError(
             "Passphrase based decryption not supported".to_string(),
         )),
     }
