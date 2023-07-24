@@ -2,16 +2,16 @@ use std::str::FromStr;
 use std::sync::Arc;
 
 use crate::error::AppError;
-use serde::{Serialize, Deserialize};
 use age::armor::ArmoredReader;
 use age::armor::ArmoredWriter;
 use age::armor::Format;
+use age::secrecy::ExposeSecret;
 use age::Decryptor;
 use age::Identity;
 use age::Recipient;
+use serde::{Deserialize, Serialize};
 use std::io::Write;
 use std::io::{Cursor, Read};
-use age::secrecy::ExposeSecret;
 
 #[derive(Serialize, Deserialize)]
 pub struct GeneratedKey {
@@ -43,7 +43,8 @@ pub fn encrypt_file(
 ) -> Result<Vec<u8>, AppError> {
     let mut output = Vec::new();
 
-    let encryptor = age::Encryptor::with_recipients(recipients).ok_or("Cannot create recipients")?;
+    let encryptor =
+        age::Encryptor::with_recipients(recipients).ok_or("Cannot create recipients")?;
 
     let mut writer = encryptor.wrap_output(&mut output)?;
 
@@ -52,6 +53,24 @@ pub fn encrypt_file(
     Ok(output)
 }
 
+pub fn decrypt_file(
+    identities: Vec<Arc<dyn Identity>>,
+    message: &[u8],
+) -> Result<Vec<u8>, AppError> {
+    let input = Cursor::new(message);
+
+    match Decryptor::new(input)? {
+        Decryptor::Recipients(d) => {
+            let mut reader = d.decrypt(identities.iter().map(|arc| arc.as_ref()))?;
+            let mut buffer = Vec::new();
+            reader.read_to_end(&mut buffer)?;
+            Ok(buffer)
+        }
+        Decryptor::Passphrase(_) => Err(AppError::RuntimeError(
+            "Passphrase based decryption not supported".to_string(),
+        )),
+    }
+}
 pub fn decrypt_message(
     identities: Vec<Arc<dyn Identity>>,
     message: &str,
@@ -109,8 +128,8 @@ pub fn gen_key() -> GeneratedKey {
     let identity = age::x25519::Identity::generate();
     return GeneratedKey {
         public_key: identity.to_public().to_string(),
-        private_key: identity.to_string().expose_secret().to_owned()
-    }
+        private_key: identity.to_string().expose_secret().to_owned(),
+    };
 }
 
 #[cfg(test)]
