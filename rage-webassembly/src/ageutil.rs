@@ -37,6 +37,21 @@ pub fn encrypt_message(
     Ok(String::from_utf8(output_vec)?)
 }
 
+pub fn encrypt_file(
+    recipients: Vec<Box<dyn Recipient + Send>>,
+    file: &[u8],
+) -> Result<Vec<u8>, AppError> {
+    let mut output = Vec::new();
+
+    let encryptor = age::Encryptor::with_recipients(recipients).ok_or("Cannot create recipients")?;
+
+    let mut writer = encryptor.wrap_output(&mut output)?;
+
+    writer.write_all(file).unwrap();
+    writer.finish()?;
+    Ok(output)
+}
+
 pub fn decrypt_message(
     identities: Vec<Arc<dyn Identity>>,
     message: &str,

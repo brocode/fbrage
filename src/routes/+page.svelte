@@ -2,6 +2,7 @@
   <div class="menu">
     <a role="button" href="/decrypt">Decrypt</a>
     <a role="button" href="/encrypt">Encrypt</a>
+    <a role="button" href="/encrypt-file">Encrypt File</a>
     <a role="button" href="/private-key">Private key management</a>
     <a role="button" href="/public-keys">Public key management</a>
     <a role="button" href="/gen-key">Generate Key</a>

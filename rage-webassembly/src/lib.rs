@@ -25,6 +25,17 @@ pub fn encrypt_message(message: String, public_keys: Array) -> Result<String, St
     let encrypted_message = ageutil::encrypt_message(recipients, &message)?;
     Ok(encrypted_message)
 }
+#[wasm_bindgen]
+pub fn encrypt_file(file: &[u8], public_keys: Array) -> Result<Vec<u8>, String> {
+    set_panic_hook();
+    let public_key_strings: Vec<String> = public_keys
+        .iter()
+        .map(|val| val.as_string().ok_or("Not a string"))
+        .collect::<Result<Vec<_>, _>>()?;
+    let recipients = ageutil::parse_public_keys(&public_key_strings)?;
+    let encrypted_message = ageutil::encrypt_file(recipients, file)?;
+    Ok(encrypted_message)
+}
 
 #[wasm_bindgen]
 pub fn decrypt_message(message: String, private_keys: Array) -> Result<String, String> {
