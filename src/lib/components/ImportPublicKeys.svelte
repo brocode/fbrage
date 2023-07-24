@@ -42,7 +42,11 @@
             const fileDetails: GithubFileDetails = await response.json();
             return {
               user: file.path.replace(".age.pub", ""),
-              keys: window.atob(fileDetails.content).split("\n").filter(Boolean),
+              keys: window
+                .atob(fileDetails.content)
+                .split("\n")
+                .filter(Boolean)
+                .filter((s) => !s.trim().startsWith("#")),
             };
           }
           return null;
