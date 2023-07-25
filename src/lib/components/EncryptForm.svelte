@@ -3,7 +3,7 @@
   import ErrorMessage from "./ErrorMessage.svelte";
   import type { PublicKeyStore } from "$lib/public_key_store";
   import PublicKeyPicker from "./PublicKeyPicker.svelte";
-  import { copyToClipboard } from "$lib/clipboard";
+  import CopyToClipboard from "./CopyToClipboard.svelte";
 
   let cipherText: string | null = null;
   let error: string | null = null;
@@ -45,13 +45,11 @@
       <a href={`/decrypt-hash#${encodeURIComponent(cipherText)}`}>Link to decrypt</a>
     </p>
 
-    <button type="button" on:click={() => cipherText && copyToClipboard(cipherText)}>Copy text to clipboard</button>
-    <button
-      type="button"
-      on:click={() =>
-        cipherText && copyToClipboard(`${window.location.origin}/decrypt-hash#${encodeURIComponent(cipherText)}`)}
-      >Copy link to clipboard</button
-    >
+    <CopyToClipboard text={cipherText} label="Copy text to clipboard" />
+    <CopyToClipboard
+      text={`${window.location.origin}/decrypt-hash#${encodeURIComponent(cipherText)}`}
+      label="Copy link to clipboard"
+    />
   </article>
 {/if}
 {#if error != null}
