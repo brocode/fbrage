@@ -1,8 +1,8 @@
 <div class="wrapper">
   <div class="menu">
     <div>
-      <a role="button" href="/decrypt">Decrypt Message</a>
       <a role="button" href="/encrypt">Encrypt Message</a>
+      <a role="button" href="/decrypt">Decrypt Message</a>
     </div>
     <div>
       <a role="button" href="/encrypt-file">Encrypt File</a>
