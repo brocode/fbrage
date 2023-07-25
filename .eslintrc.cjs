@@ -13,6 +13,9 @@ module.exports = {
     es2017: true,
     node: true,
   },
+  globals: {
+    __FBRAGE_BUILD_DATE__: "readonly",
+  },
   ignorePatterns: ["rage-webassembly/**"],
   overrides: [
     {

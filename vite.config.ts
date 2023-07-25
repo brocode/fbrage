@@ -4,6 +4,13 @@ import wasm from "vite-plugin-wasm";
 
 export default defineConfig({
   plugins: [wasm(), sveltekit()],
+  define: {
+    __FBRAGE_BUILD_DATE__: JSON.stringify(
+      new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Europe/Berlin" }).format(
+        new Date(),
+      ),
+    ),
+  },
   build: {
     target: "esnext",
   },

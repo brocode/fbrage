@@ -1,3 +1,7 @@
+<script lang="ts">
+  const buildDate = __FBRAGE_BUILD_DATE__;
+</script>
+
 <div class="wrapper">
   <div class="menu">
     <div>
@@ -13,10 +17,16 @@
       <a role="button" href="/public-keys">Public key management</a>
       <a role="button" href="/gen-key">Generate Key</a>
     </div>
+    <div>
+      <span class="build-date">Build date: {buildDate}</span>
+    </div>
   </div>
 </div>
 
 <style lang="scss">
+  .build-date {
+    font-size: 12px;
+  }
   .wrapper {
     display: flex;
     justify-content: center;
@@ -30,6 +40,7 @@
       display: flex;
       gap: 10px;
       flex-direction: column;
+      text-align: center;
     }
   }
 </style>
