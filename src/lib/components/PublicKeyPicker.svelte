@@ -3,6 +3,10 @@
 
   export let publicKeyStore: PublicKeyStore;
   export let selection: string[] = [];
+
+  function selectAll() {
+    selection = Object.keys(publicKeyStore);
+  }
 </script>
 
 <fieldset>
@@ -19,3 +23,5 @@
     </label>
   {/each}
 </fieldset>
+
+<button on:click={selectAll} type="button">Select all</button>
