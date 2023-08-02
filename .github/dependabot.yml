@@ -3,9 +3,17 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "cargo"
     directory: "/rage-webassembly"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
