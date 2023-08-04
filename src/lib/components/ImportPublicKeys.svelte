@@ -1,6 +1,7 @@
 <script lang="ts">
   import ErrorMessage from "./ErrorMessage.svelte";
   import { publicKeyStore, type PublicKeyStore } from "$lib/public_key_store";
+  import { get } from "svelte/store";
 
   let error: string | null;
 
@@ -53,7 +54,7 @@
         }),
     );
 
-    const newPublicKeystore: PublicKeyStore = publicKeys
+    const importedPublicKeys: PublicKeyStore = publicKeys
       .filter((i): i is UserKeys => i != null)
       .reduce((acc, val) => {
         return {
@@ -62,7 +63,12 @@
         };
       }, {} as PublicKeyStore);
 
-    publicKeyStore.set(newPublicKeystore);
+    const currentPublicKeys = get(publicKeyStore);
+
+    publicKeyStore.set({
+      ...currentPublicKeys,
+      ...importedPublicKeys,
+    });
   }
 </script>
 

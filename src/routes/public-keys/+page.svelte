@@ -10,8 +10,6 @@
   <strong>Beware: An import replaces all keys with the imported ones.</strong>
 </p>
 
-<ImportPublicKeys />
-
 {#each Object.keys($publicKeyStore) as recipientName}
   <article>
     <header>{recipientName}</header>
@@ -20,3 +18,5 @@
     {/each}
   </article>
 {/each}
+
+<ImportPublicKeys />
