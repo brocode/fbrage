@@ -2,6 +2,19 @@
   import { publicKeyStore } from "$lib/public_key_store";
   export let recipientName: string;
 
+  let publicKeyToAdd = "";
+
+  function addKey() {
+    publicKeyStore.update((current) => {
+      const keys = current[recipientName] ?? [];
+      return {
+        ...current,
+        [recipientName]: [...keys, publicKeyToAdd],
+      };
+    });
+    publicKeyToAdd = "";
+  }
+
   function deleteRecipient() {
     publicKeyStore.update((current) => {
       const newKeys = { ...current };
@@ -24,21 +37,32 @@
   }
 </script>
 
-<article>
-  <header>{recipientName}</header>
-  {#each $publicKeyStore[recipientName] as key}
-    <div class="key">
-      <pre>{key}</pre>
-      <button on:click={() => deletePublicKey(key)} type="button">Delete</button>
-    </div>
-  {/each}
+{#if $publicKeyStore[recipientName]}
+  <article>
+    <header>{recipientName}</header>
+    {#each $publicKeyStore[recipientName] as key}
+      <div class="key">
+        <pre>{key}</pre>
+        <button on:click={() => deletePublicKey(key)} type="button">Delete</button>
+      </div>
+    {/each}
 
-  <footer>
-    <button type="button" on:click={deleteRecipient}>Delete Recipient</button>
-  </footer>
-</article>
+    <footer>
+      <form on:submit|preventDefault={addKey} class="add-key-form">
+        <input name="public_key" required placeholder="Public key" bind:value={publicKeyToAdd} />
+        <button type="submit">add</button>
+      </form>
+      <button type="button" on:click={deleteRecipient}>Delete Recipient</button>
+    </footer>
+  </article>
+{/if}
 
 <style lang="scss">
+  .add-key-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+  }
   .key {
     display: grid;
     grid-template-columns: 1fr auto;
