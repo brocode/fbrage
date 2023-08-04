@@ -1,14 +1,10 @@
 <script lang="ts">
+  import CreateRecipientForm from "$lib/components/CreateRecipientForm.svelte";
   import ImportPublicKeys from "$lib/components/ImportPublicKeys.svelte";
   import { publicKeyStore } from "$lib/public_key_store";
 </script>
 
-<h1>Coole public keys</h1>
-
-<p>Currently only the import of symbiolab age public keys is supported. Manual key management pending.</p>
-<p>
-  <strong>Beware: An import replaces all keys with the imported ones.</strong>
-</p>
+<h1>Existing public keys</h1>
 
 {#each Object.keys($publicKeyStore) as recipientName}
   <article>
@@ -18,5 +14,9 @@
     {/each}
   </article>
 {/each}
+
+<h1>Recipients</h1>
+
+<CreateRecipientForm />
 
 <ImportPublicKeys />

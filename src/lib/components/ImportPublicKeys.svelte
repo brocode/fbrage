@@ -72,7 +72,11 @@
   }
 </script>
 
-<button on:click={loadPublicKeys}>Import Symbiolab Public Keys</button>
-{#if error != null}
-  <ErrorMessage {error} />
-{/if}
+<article>
+  <header>Import symbiolab public keys</header>
+  <p>Import will overwrite existing symbiolab recipients. Recipients that are not part of symbiolab are left intact.</p>
+  <button on:click={loadPublicKeys}>Import</button>
+  {#if error != null}
+    <ErrorMessage {error} />
+  {/if}
+</article>
