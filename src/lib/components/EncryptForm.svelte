@@ -30,7 +30,7 @@
   <p>No public keys available. Please import theme <a href="/public-keys">here</a>.</p>
 {:else}
   <form on:submit|preventDefault={handleSubmit}>
-    <PublicKeyPicker bind:selection {publicKeyStore} />
+    <PublicKeyPicker bind:selection />
     <textarea required rows={10} placeholder="Ciphertext" bind:value={plainText} />
     <button>Encrypt</button>
   </form>

@@ -2,12 +2,12 @@
   import CreateRecipientForm from "$lib/components/CreateRecipientForm.svelte";
   import ImportPublicKeys from "$lib/components/ImportPublicKeys.svelte";
   import RecipientCard from "$lib/components/RecipientCard.svelte";
-  import { publicKeyStore } from "$lib/public_key_store";
+  import { sortedKeys } from "$lib/public_key_store";
 </script>
 
 <h1>Existing public keys</h1>
 
-{#each Object.keys($publicKeyStore) as recipientName}
+{#each $sortedKeys as recipientName}
   <RecipientCard {recipientName} />
 {/each}
 

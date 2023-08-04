@@ -55,7 +55,7 @@
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
-  <PublicKeyPicker bind:selection publicKeyStore={$publicKeyStore} />
+  <PublicKeyPicker bind:selection />
   <input required type="file" on:change={handleChange} />
   <button>Encrypt</button>
 </form>

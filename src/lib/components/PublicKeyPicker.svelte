@@ -1,16 +1,15 @@
 <script lang="ts">
-  import type { PublicKeyStore } from "$lib/public_key_store";
-
-  export let publicKeyStore: PublicKeyStore;
+  import { sortedKeys } from "$lib/public_key_store";
+  import { get } from "svelte/store";
   export let selection: string[] = [];
 
   function selectAll() {
-    selection = Object.keys(publicKeyStore);
+    selection = [...get(sortedKeys)];
   }
 </script>
 
 <fieldset>
-  {#each Object.keys(publicKeyStore) as recipientName}
+  {#each $sortedKeys as recipientName}
     <label for={`recipient-${recipientName}`}>
       <input
         type="checkbox"
