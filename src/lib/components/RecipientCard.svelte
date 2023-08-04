@@ -9,13 +9,39 @@
       return newKeys;
     });
   }
+
+  function deletePublicKey(publicKey: string) {
+    publicKeyStore.update((current) => {
+      const keys = current[recipientName] ?? [];
+
+      const newKeys = keys.filter((key) => key != publicKey);
+
+      return {
+        ...current,
+        [recipientName]: newKeys,
+      };
+    });
+  }
 </script>
 
 <article>
   <header>{recipientName}</header>
   {#each $publicKeyStore[recipientName] as key}
-    <pre>{key}</pre>
+    <div class="key">
+      <pre>{key}</pre>
+      <button on:click={() => deletePublicKey(key)} type="button">Delete</button>
+    </div>
   {/each}
 
-  <button type="button" on:click={deleteRecipient}>Delete Recipient</button>
+  <footer>
+    <button type="button" on:click={deleteRecipient}>Delete Recipient</button>
+  </footer>
 </article>
+
+<style lang="scss">
+  .key {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+  }
+</style>
