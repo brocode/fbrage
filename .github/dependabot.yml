@@ -17,3 +17,11 @@ updates:
       all-dependencies-cargo:
         patterns:
           - "*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      all-dependencies-actions:
+        patterns:
+          - "*"
