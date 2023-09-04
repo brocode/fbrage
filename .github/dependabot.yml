@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     groups:
       all-dependencies-npm:
         patterns:
@@ -12,7 +12,7 @@ updates:
   - package-ecosystem: "cargo"
     directory: "/rage-webassembly"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     groups:
       all-dependencies-cargo:
         patterns:
@@ -20,7 +20,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     groups:
       all-dependencies-actions:
         patterns:
