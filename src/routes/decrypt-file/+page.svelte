@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { preventDefault } from "svelte/legacy";
+
   import { decrypt_file } from "rage-webassembly";
   import { get } from "svelte/store";
   import ErrorMessage from "$lib/components/ErrorMessage.svelte";
@@ -6,7 +8,7 @@
   import { privateKeyStore } from "$lib/private_key_store";
 
   let file: File | null;
-  let error: string | null = null;
+  let error: string | null = $state(null);
   let objectURL: string | null = null;
 
   onDestroy(() => {
@@ -54,8 +56,8 @@
 
 <p>Available private keys: {Object.keys($privateKeyStore).length}</p>
 
-<form on:submit|preventDefault={handleSubmit}>
-  <input required type="file" on:change={handleChange} />
+<form onsubmit={preventDefault(handleSubmit)}>
+  <input required type="file" onchange={handleChange} />
   <button>Decrypt</button>
 </form>
 

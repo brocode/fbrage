@@ -6,9 +6,9 @@
   import Message from "$lib/components/Message.svelte";
 
   let hash = decodeURIComponent(window.location.hash.substring(1));
-  let error: string | null = null;
+  let error: string | null = $state(null);
 
-  let decryptedMessage: string | null = null;
+  let decryptedMessage: string | null = $state(null);
   try {
     let privateKeys = Object.values(get(privateKeyStore));
     decryptedMessage = decrypt_message(hash, privateKeys);

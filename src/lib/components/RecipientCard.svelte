@@ -1,8 +1,14 @@
 <script lang="ts">
-  import { publicKeyStore } from "$lib/public_key_store";
-  export let recipientName: string;
+  import { preventDefault } from "svelte/legacy";
 
-  let publicKeyToAdd = "";
+  import { publicKeyStore } from "$lib/public_key_store";
+  interface Props {
+    recipientName: string;
+  }
+
+  let { recipientName }: Props = $props();
+
+  let publicKeyToAdd = $state("");
 
   function addKey() {
     publicKeyStore.update((current) => {
@@ -43,16 +49,16 @@
     {#each $publicKeyStore[recipientName] as key}
       <div class="key">
         <pre>{key}</pre>
-        <button on:click={() => deletePublicKey(key)} type="button">Delete</button>
+        <button onclick={() => deletePublicKey(key)} type="button">Delete</button>
       </div>
     {/each}
 
     <footer>
-      <form on:submit|preventDefault={addKey} class="add-key-form">
+      <form onsubmit={preventDefault(addKey)} class="add-key-form">
         <input name="public_key" required placeholder="Public key" bind:value={publicKeyToAdd} />
         <button type="submit">add</button>
       </form>
-      <button type="button" on:click={deleteRecipient}>Delete Recipient</button>
+      <button type="button" onclick={deleteRecipient}>Delete Recipient</button>
     </footer>
   </article>
 {/if}

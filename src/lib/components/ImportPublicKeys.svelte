@@ -3,7 +3,7 @@
   import { publicKeyStore, type PublicKeyStore } from "$lib/public_key_store";
   import { get } from "svelte/store";
 
-  let error: string | null;
+  let error: string | undefined = $state();
 
   interface RepositoryTree {
     tree: GithubFile[];
@@ -24,7 +24,7 @@
   }
 
   async function loadPublicKeys() {
-    error = null;
+    error = undefined;
     const response = await fetch("https://api.github.com/repos/symbiolab/age-public-keys/git/trees/main?recursive=0");
 
     if (!response.ok) {
@@ -75,7 +75,7 @@
 <article>
   <header>Import symbiolab public keys</header>
   <p>Import will overwrite existing symbiolab recipients. Recipients that are not part of symbiolab are left intact.</p>
-  <button on:click={loadPublicKeys}>Import</button>
+  <button onclick={loadPublicKeys}>Import</button>
   {#if error != null}
     <ErrorMessage {error} />
   {/if}

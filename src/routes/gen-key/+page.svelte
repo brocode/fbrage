@@ -1,11 +1,13 @@
 <script lang="ts">
+  import { run, preventDefault } from "svelte/legacy";
+
   import { genkey } from "rage-webassembly";
   import { privateKeyStore } from "$lib/private_key_store";
   import { get } from "svelte/store";
   import ErrorMessage from "$lib/components/ErrorMessage.svelte";
 
-  let nameInput: HTMLInputElement | null = null;
-  let keyName = "";
+  let nameInput: HTMLInputElement | null = $state(null);
+  let keyName = $state("");
 
   function checkIfKeyExists(keyName: string) {
     if (keyName && get(privateKeyStore)[keyName]) {
@@ -15,12 +17,14 @@
     }
   }
 
-  $: checkIfKeyExists(keyName);
+  run(() => {
+    checkIfKeyExists(keyName);
+  });
 
-  let error: string | null = null;
+  let error: string | null = $state(null);
 
   type GeneratedKey = { public_key: string; private_key: string };
-  let generatedKey: GeneratedKey | null = null;
+  let generatedKey: GeneratedKey | null = $state(null);
 
   function handleGenKey() {
     error = null;
@@ -42,7 +46,7 @@
 {#if generatedKey == null}
   <p>The key will automatically be stored in your private keys. You need to publish your public key yourself.</p>
 
-  <form on:submit|preventDefault={handleGenKey}>
+  <form onsubmit={preventDefault(handleGenKey)}>
     <input bind:this={nameInput} name="key_name" required placeholder="Name of your age key" bind:value={keyName} />
     <button>Generate key</button>
   </form>

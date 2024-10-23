@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { preventDefault } from "svelte/legacy";
+
   import { encrypt_message } from "rage-webassembly";
   import { publicKeyStore } from "$lib/public_key_store";
   import PublicKeyPicker from "$lib/components/PublicKeyPicker.svelte";
@@ -6,12 +8,12 @@
   import ErrorMessage from "$lib/components/ErrorMessage.svelte";
   import { get } from "svelte/store";
 
-  let cipherText: string | null = null;
-  let error: string | null = null;
+  let cipherText: string | null = $state(null);
+  let error: string | null = $state(null);
 
-  let plainText = "";
+  let plainText = $state("");
 
-  let selection: string[] = [];
+  let selection: string[] = $state([]);
 
   const handleSubmit = () => {
     error = null;
@@ -28,9 +30,9 @@
 {#if Object.keys($publicKeyStore).length == 0}
   <p>No public keys available. Please import theme <a href="/public-keys">here</a>.</p>
 {:else}
-  <form on:submit|preventDefault={handleSubmit}>
+  <form onsubmit={preventDefault(handleSubmit)}>
     <PublicKeyPicker bind:selection />
-    <textarea required rows={10} placeholder="Ciphertext" bind:value={plainText} />
+    <textarea required rows={10} placeholder="Ciphertext" bind:value={plainText}></textarea>
     <button>Encrypt</button>
   </form>
 {/if}

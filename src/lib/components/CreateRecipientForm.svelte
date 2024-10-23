@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { preventDefault } from "svelte/legacy";
+
   import { publicKeyStore } from "$lib/public_key_store";
 
-  let recipientName = "";
+  let recipientName = $state("");
 
   function createRecipient() {
     publicKeyStore.update((current) => {
@@ -17,7 +19,7 @@
 <article>
   <header>Create recipient</header>
 
-  <form on:submit|preventDefault={createRecipient}>
+  <form onsubmit={preventDefault(createRecipient)}>
     <input name="recipient_name" required placeholder="Recipient name" bind:value={recipientName} />
     <button type="submit">Create</button>
   </form>

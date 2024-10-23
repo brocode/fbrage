@@ -3,10 +3,11 @@
   import { privateKeyStore } from "$lib/private_key_store";
   import type { FormEventHandler } from "svelte/elements";
 
-  let keyName: string;
-  let keyContent: string;
+  let keyName: string = $state("");
+  let keyContent: string = $state("");
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (ev) => {
+    ev.preventDefault();
     privateKeyStore.update((current) => ({
       ...current,
       [keyName]: keyContent,
@@ -24,9 +25,9 @@
   };
 </script>
 
-<form on:submit|preventDefault={handleSubmit}>
+<form onsubmit={handleSubmit}>
   <input required name="key_name" placeholder="Name of your age key" bind:value={keyName} />
-  <textarea required placeholder="Private key" bind:value={keyContent} />
+  <textarea required placeholder="Private key" bind:value={keyContent}></textarea>
   <button>Add Key</button>
 </form>
 {#each Object.keys($privateKeyStore) as name}

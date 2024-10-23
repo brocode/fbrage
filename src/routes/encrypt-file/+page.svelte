@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { preventDefault } from "svelte/legacy";
+
   import PublicKeyPicker from "$lib/components/PublicKeyPicker.svelte";
   import { encrypt_file } from "rage-webassembly";
   import { publicKeyStore } from "$lib/public_key_store";
@@ -7,8 +9,8 @@
   import { onDestroy } from "svelte";
 
   let file: File | null;
-  let error: string | null = null;
-  let selection: string[] = [];
+  let error: string | null = $state(null);
+  let selection: string[] = $state([]);
   let objectURL: string | null = null;
 
   onDestroy(() => {
@@ -54,9 +56,9 @@
   }
 </script>
 
-<form on:submit|preventDefault={handleSubmit}>
+<form onsubmit={preventDefault(handleSubmit)}>
   <PublicKeyPicker bind:selection />
-  <input required type="file" on:change={handleChange} />
+  <input required type="file" onchange={handleChange} />
   <button>Encrypt</button>
 </form>
 

@@ -2,10 +2,14 @@
   import { delay } from "$lib/delay";
   import ErrorMessage from "./ErrorMessage.svelte";
 
-  export let text: string;
-  export let label: string;
+  interface Props {
+    text: string;
+    label: string;
+  }
 
-  let copied = false;
+  let { text, label }: Props = $props();
+
+  let copied = $state(false);
   let error: string | null = null;
 
   async function copyToClipboard(text: string) {
@@ -21,7 +25,7 @@
   }
 </script>
 
-<button type="button" on:click={() => copyToClipboard(text)}>
+<button type="button" onclick={() => copyToClipboard(text)}>
   {#if copied}
     Copied
   {:else}

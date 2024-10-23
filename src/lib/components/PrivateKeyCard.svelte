@@ -1,12 +1,18 @@
 <script lang="ts">
+  import { run } from "svelte/legacy";
+
   import { get_public_key_for_private_key } from "rage-webassembly";
   import ErrorMessage from "./ErrorMessage.svelte";
 
-  export let name: string;
-  export let privateKey: string;
-  export let handleDelete: (name: string) => void;
-  let publicKey: string | null = null;
-  let error: string | null = null;
+  interface Props {
+    name: string;
+    privateKey: string;
+    handleDelete: (name: string) => void;
+  }
+
+  let { name, privateKey, handleDelete }: Props = $props();
+  let publicKey: string | null = $state(null);
+  let error: string | null = $state(null);
 
   function getPublicKeyForPrivateKey(key: string) {
     error = null;
@@ -18,7 +24,9 @@
     }
   }
 
-  $: getPublicKeyForPrivateKey(privateKey);
+  run(() => {
+    getPublicKeyForPrivateKey(privateKey);
+  });
 </script>
 
 <article>
@@ -29,5 +37,5 @@
   {#if error != null}
     <ErrorMessage {error} />
   {/if}
-  <button on:click={() => handleDelete(name)}>Delete</button>
+  <button onclick={() => handleDelete(name)}>Delete</button>
 </article>

@@ -2,13 +2,18 @@
   import "@fontsource/fira-sans";
   import "@fontsource/fira-code";
   import "$lib/scss/global.scss";
+  interface Props {
+    children?: import("svelte").Snippet;
+  }
+
+  let { children }: Props = $props();
 </script>
 
 <div class="title">
   <a href="/">fbrage</a>
 </div>
 <main>
-  <slot />
+  {@render children?.()}
 </main>
 
 <style lang="scss">

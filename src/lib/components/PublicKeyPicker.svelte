@@ -1,7 +1,11 @@
 <script lang="ts">
   import { sortedKeys } from "$lib/public_key_store";
   import { get } from "svelte/store";
-  export let selection: string[] = [];
+  interface Props {
+    selection?: string[];
+  }
+
+  let { selection = $bindable([]) }: Props = $props();
 
   function selectAll() {
     selection = [...get(sortedKeys)];
@@ -23,4 +27,4 @@
   {/each}
 </fieldset>
 
-<button on:click={selectAll} type="button">Select all</button>
+<button onclick={selectAll} type="button">Select all</button>
