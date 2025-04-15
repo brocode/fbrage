@@ -15,7 +15,7 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.3.0",
     "@sveltejs/adapter-static": "^3.0.5",
-    "@sveltejs/kit": "^2.7.2",
+    "@sveltejs/kit": "^2.20.6",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "husky": "^9.1.6",
     "prettier": "^3.3.3",
